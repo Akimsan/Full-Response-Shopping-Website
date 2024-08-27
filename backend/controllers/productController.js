@@ -10,9 +10,11 @@ exports.getProducts = async(req,res,next) => {
    const resPerPage = 3 ;
 
   const apiFeatures =  new APIFeatures( Product.find(),req.query).search().filter().paginate(resPerPage);
+  
+  return next(new ErrorHandler("unable to get products........!",400))
 
   const products = await apiFeatures.query;
-
+  await new Promise(resolve => setTimeout(resolve, 3000))
   res.status(200).json({
     success : true,
     products
