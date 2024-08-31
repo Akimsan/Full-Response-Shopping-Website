@@ -10,13 +10,17 @@ exports.getProducts = async(req,res,next) => {
    const resPerPage = 3 ;
 
   const apiFeatures =  new APIFeatures( Product.find(),req.query).search().filter().paginate(resPerPage);
-  
-  return next(new ErrorHandler("unable to get products........!",400))
+
 
   const products = await apiFeatures.query;
-  await new Promise(resolve => setTimeout(resolve, 3000))
+  const totalProductsCount = await Product.countDocuments({}) //it give the total countbof documents
+
+
+  await new Promise(resolve => setTimeout(resolve, 500))
   res.status(200).json({
     success : true,
+    count:totalProductsCount,
+    resPerPage,
     products
   })
 };
@@ -44,6 +48,7 @@ exports.getSingleProducts = async(req,res,next)=>{
     //   message:"Product not found"
     // })
    }
+   
    res.status(201).json({
       success:true,
       product

@@ -19,6 +19,7 @@ const productSlice = createSlice({
             return{
                 loading:false,
                 product: action.payload.product
+                
             }
         },
 
